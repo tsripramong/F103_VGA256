@@ -1,0 +1,11 @@
+../Core/Src/tetris.c:69:6:NextBlock	8	static
+../Core/Src/tetris.c:82:6:getFallingBlockArray	16	static
+../Core/Src/tetris.c:107:5:isDrawable	40	static
+../Core/Src/tetris.c:147:6:clearOldBlockVersion	40	static
+../Core/Src/tetris.c:172:6:drawNewBlockVersion	40	static
+../Core/Src/tetris.c:198:5:isGameOver	8	static
+../Core/Src/tetris.c:210:5:isAtBottom	24	static
+../Core/Src/tetris.c:230:6:showScore	64	static
+../Core/Src/tetris.c:252:6:CollapseFullRow	48	static
+../Core/Src/tetris.c:307:6:tetris	48	static
+../Core/Src/tetris.c:408:6:GameOver	8	static
