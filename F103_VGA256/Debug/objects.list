@@ -4,6 +4,7 @@
 "./Core/Src/syscalls.o"
 "./Core/Src/sysmem.o"
 "./Core/Src/system_stm32f1xx.o"
+"./Core/Src/tetris.o"
 "./Core/Src/vga256.o"
 "./Core/Src/vgafonts.o"
 "./Core/Startup/startup_stm32f103c8tx.o"

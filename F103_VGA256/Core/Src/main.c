@@ -28,6 +28,7 @@
 #include "color100.h"
 #include "flower100.h"
 #include "rgb100.h"
+#include "tetris.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,17 +52,19 @@ TIM_HandleTypeDef htim4;
 DMA_HandleTypeDef hdma_tim4_up;
 
 /* USER CODE BEGIN PV */
-uint16_t VOFFSET=3,preVoffset=3500;
+//uint16_t VOFFSET=3,preVoffset=3500;
+uint16_t VOFFSET=0,preVoffset=95;
 uint16_t vga_stop=0;
 int16_t line=0;
 uint16_t firstTrig=1;
 
+GPIO_TypeDef *keyPort = GPIOA;
+uint16_t keyRowPin[4] = {GPIO_PIN_9,GPIO_PIN_10,GPIO_PIN_11,GPIO_PIN_12};
+uint16_t keyColPin[3] = {GPIO_PIN_5,GPIO_PIN_6,GPIO_PIN_7};
+int keyMap[4][3] = {{1,2,3},{4,5,6},{7,8,9},{11,10,12}};
 uint16_t vga_voff[16];
 uint32_t GPIOB_ODR;
-
-char kBuffer[16];
-int kBin=0;
-int kBout=0;
+//NOTE: We can not use GPIOB for other GPIOs because we sent data directly to GPIOB
 char msg[64];
 /* USER CODE END PV */
 
@@ -83,6 +86,35 @@ void VGA_update(){
 	for(int i=1;i<16;i++){
 		vga_voff[i]=vga_voff[i-1]+VGA_LBUFFERSIZE;
 	}
+}
+
+extern void myDelay(int ms){
+	HAL_Delay(ms);
+}
+
+extern uint8_t getch(uint8_t *ch){
+	for(int i=0;i<4;i++){
+		//Prime row output for ready to bring col to ground
+		HAL_GPIO_WritePin(keyPort,keyRowPin[i],0);
+	}
+	//Detect column pressed
+	int i,j;
+	for(i=0;i<3;i++){
+		if(HAL_GPIO_ReadPin(keyPort,keyColPin[i])==0){
+			//Testing for row
+			for(j=0;j<4;j++){
+				HAL_GPIO_WritePin(keyPort,keyRowPin[j],1);
+				if(HAL_GPIO_ReadPin(keyPort,keyColPin[i]))
+					break;
+			}
+	    }
+		if(j<4)break;
+	}
+    if(i<3){  //a key is pressed
+    	*ch = keyMap[j][i];
+    	return 1;
+    }
+    return 0;
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
@@ -148,6 +180,8 @@ static void DMA_CpltCallback(DMA_HandleTypeDef *hdma){
 		firstTrig=1;
 	}
 }
+
+
 /* USER CODE END 0 */
 
 /**
@@ -257,6 +291,18 @@ int main(void)
 	  c = rand()%256;
 	  FillRectangle(x,y,w,h,c);
 
+	  /*
+	  {
+		  uint8_t ch;
+	      if(getch(&ch)){
+	    	  sprintf(msg,"%d",ch);
+	    	  SetCursor(1,1);
+	    	  WriteString(msg,Font_7x10,VGA_WHITE);
+	      }
+	  }
+	  HAL_Delay(100);
+	  continue;
+	  */
 	  z=z+1;
 	  if(z>=100){
 		  /////////
@@ -267,6 +313,8 @@ int main(void)
 		  HAL_Delay(5000);
 		  ShowImage((uint8_t *)rgb,100,75,0,0);
 		  HAL_Delay(5000);
+
+		  tetris();
 		  //////////
 		  z=0;
 		  ClearScreen(VGA_BLACK);
@@ -545,12 +593,21 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, G0_Pin|G1_Pin|G2_Pin|R0_Pin
                           |R1_Pin|R2_Pin|B0_Pin|B1_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, ROW0_Pin|ROW1_Pin|ROW2_Pin|ROW3_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pin : PC13 */
   GPIO_InitStruct.Pin = GPIO_PIN_13;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : COL0_Pin COL1_Pin COL2_Pin */
+  GPIO_InitStruct.Pin = COL0_Pin|COL1_Pin|COL2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : G0_Pin G1_Pin G2_Pin R0_Pin
                            R1_Pin R2_Pin B0_Pin B1_Pin */
@@ -560,6 +617,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : ROW0_Pin ROW1_Pin ROW2_Pin ROW3_Pin */
+  GPIO_InitStruct.Pin = ROW0_Pin|ROW1_Pin|ROW2_Pin|ROW3_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 }
 
