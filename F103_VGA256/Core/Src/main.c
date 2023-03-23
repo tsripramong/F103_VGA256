@@ -88,7 +88,7 @@ void VGA_update(){
 	}
 }
 
-extern void myDelay(int ms){
+extern void tetrisDelay(int ms){
 	HAL_Delay(ms);
 }
 
@@ -268,6 +268,10 @@ int main(void)
   int r,x,y,w,h,z=0,c;
   while (1)
   {
+// If you want to only try Tetris, uncomment here
+//	  tetris();
+//	  continue;
+
 	  r = rand()%25;
 	  x = rand()%VGA_WIDTH;
 	  y = rand()%VGA_HEIGHT;

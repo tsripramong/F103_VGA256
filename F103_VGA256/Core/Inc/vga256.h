@@ -26,6 +26,7 @@
 #define VGA_BLUE	0x03
 #define VGA_GRAY	0x49
 #define VGA_YELLOW	0xfc
+#define VGA_ORANGE	0xec
 #define VGA_CYAN	0x1f
 #define VGA_PURPLE  0xe3
 #define VGA_COLOR uint8_t
