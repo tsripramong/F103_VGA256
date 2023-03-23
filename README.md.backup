@@ -98,5 +98,5 @@ Please note that HAL_DMA_RegisterCallback() is rather finicky, using the functio
 
 ## Bonus: A little bit of Tetris
 
-I wrote a simple version of Tetris to show that we could write a simple program to work with the VGA display. Please note that working with a more complicate task might cause the display to flicker, out out sync, or at least, the display area might move out of the correct position. If the display is not in the right location, you can correct it by   changing the values for preVoffset (fine-tune value) and/or VOFFSET(do not ) to your desires.
+I wrote a simple version of Tetris to show that we could write a simple program to work with the VGA display. Please note that working with a more complicate task might cause the display to flicker, out out sync, or at least, the display area might move out of the correct position. If the display is not in the right location, you can correct it by   changing the values for preVoffset (fine-tune value) and/or VOFFSET(value is in the range from 0 to 74) to your desires.
 

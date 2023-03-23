@@ -46,7 +46,7 @@ TIM1 and TIM2 are used to generate H-sync and V-sync signal for VGA output. TIM4
 
 8-bit data are pushed at the same time through PB8 to PB15 by accessing to register address of PB directly. PB8/PB9 are for blue signal (4 levels), PB10/PB11/PB12 are for green signal (8 levels), and PB13/PB14/PB15 are for red signal (8 levels).
 
-Trimpots (R7,R14/R19) can be anything from 500ohms and up. You can adjust the values for color brightness to achieve a correct white-balance. 
+Trimpots (R9,R10/R11) can be anything from 500ohms and up. You can adjust the values for color brightness to achieve a correct white-balance. 
 
 PA5-PA7 and PA9-PA12 are for 3x4 keypad and are used only for Tetris. This is not a part of VGA code. 
 
