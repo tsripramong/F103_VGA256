@@ -84,14 +84,14 @@ However, when I test the program, I found out that the signal is not accuracy en
 ![](Pictures/tim2.png)
 ![](Pictures/tim2_nvic.png)
 
-TIM2 global interrupt is used to time the restart of DMA which controls the speed of transfering data by TIM4.
+TIM2 global interrupt is used to trig the restart of DMA. DMA transfer speed is controlled by TIM4.
 
 ![](Pictures/tim4.png)
 ![](Pictures/tim4_dma.png)
 
-We set TIM4 to reload the counter at 1/8 speed of TIM1. Which means the signal output is at 1/8 of screen pixel at 100pixel width. 
+We set TIM4 to reload the counter at 1/8 speed of TIM1. Which means the signal output is at 1/8 of screen pixel ,or 100 pixel width. 
 
-We use TIM4 time-up signal to control DMA1 channel7 to transfer data from memory to GPIO port (in this case, PB8-PB15). By using Circular mode we can register callback functions to move data from our videoRAM area to DMA memory to be ready to sent. 
+We use TIM4 time-up signal to control DMA1 stream7 to transfer data from memory to GPIO port (in this case, PB8-PB15). By using Circular mode we can register callback functions to move data from our videoRAM area to DMA memory to be ready to sent. 
 
 Please note that HAL_DMA_RegisterCallback() is rather finicky, using the function anywhere after the location I added in the code might cause it to fail. So we set it first thing before start the DMA for the first time.
 
