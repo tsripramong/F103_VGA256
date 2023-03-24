@@ -75,7 +75,7 @@ We use PWM channel 1 to generate H-sync signal, pulse width is 72 pixel clock wi
 
 ![](Pictures/tim1.png)
 
-TIM2 is for V-sync signal generation. Here, we use overflow signal from TIM1 to trig TIM1 to count up. According to the manual for F103 series, this trigger source is routed via ITR0. 
+TIM2 is for V-sync signal generation. Here, we use overflow signal from TIM1 to trig TIM2 to count up. According to the manual for F103 series, this trigger source is routed via ITR0. 
 
 The time perioud of V-sync is equal to 625 scan lines so we set Counter Period to 624. PWM channel1 of TIM2 is used to generate V-sync signal which the pulse width of 2.
 
