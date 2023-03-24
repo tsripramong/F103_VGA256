@@ -34,7 +34,7 @@ Whole frame 625 lines.
 ## Important Note
 
 - This example uses DMA memory-to-Peripheral with a very high speed.. If you implement with program that requires DMA transfer for other things or using NVIC, it will affect the display in the from of flickering, horizontal shifting or anything else. So please keep in mind.
-- Port PB8-PB15 are used for outputing the RGB signal. However the program code sends the whole byte to PB register directly and affect all the output for PB (from PB0 to PB15). So you can not use PB0-PB7 as GPIO output.
+- Port PB8-PB15 are used for outputing the RGB signals. However the program code sends the whole byte to PB register directly and affect all the output for PB (from PB0 to PB15). So you can not use PB0-PB7 as GPIO output.
 - We send the output signal at 1/8 of VGA output (at 4.5 MHz instead of 36 MHz). Thus, the actual resolution is down to 100x600px. To keep the aspect ratio, I have to send each line 8 times, so the resolution is actually 100x75px.
 
 
@@ -42,11 +42,11 @@ Whole frame 625 lines.
 
 We use STM32F103C8T6 (Blue pill) in this project, you might substitute with CBT6 but not C6T6 as its RAM is too small for this project.
 
-TIM1 and TIM2 are used to generate H-sync and V-sync signal for VGA output. TIM4 generates a time-base signal for DMA transfer. 
+TIM1 and TIM2 are used to generate H-sync and V-sync signals for VGA output. TIM4 generates a time-base signal for DMA transfer. 
 
-8-bit data are pushed at the same time through PB8 to PB15 by accessing to register address of PB directly. PB8/PB9 are for blue signal (4 levels), PB10/PB11/PB12 are for green signal (8 levels), and PB13/PB14/PB15 are for red signal (8 levels).
+8-bit data are pushed at the same time through PB8 to PB15 by accessing register address of PB directly. PB8/PB9 are for blue signal (4 levels), PB10/PB11/PB12 are for green signal (8 levels), and PB13/PB14/PB15 are for red signal (8 levels).
 
-Trimpots (R9,R10/R11) can be anything from 500ohms and up. You can adjust the values for color brightness to achieve a correct white-balance. 
+Trimpots (R9,R10/R11) can be anything from 500ohms and up. Adjust the values for color brightness to achieve a correct white-balance. 
 
 PA5-PA7 and PA9-PA12 are for 3x4 keypad and are used only for Tetris. This is not a part of VGA code. 
 
