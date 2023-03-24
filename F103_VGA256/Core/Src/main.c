@@ -92,6 +92,10 @@ extern void tetrisDelay(int ms){
 	HAL_Delay(ms);
 }
 
+extern uint32_t tetrisSeed(){
+	return TIM1->CNT+TIM2->CNT+TIM4->CNT;
+}
+
 extern uint8_t getch(uint8_t *ch){
 	for(int i=0;i<4;i++){
 		//Prime row output for ready to bring col to ground
