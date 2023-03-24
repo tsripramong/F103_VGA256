@@ -91,10 +91,7 @@ TIM2 global interrupt is used to trig the restart of DMA. DMA transfer speed is 
 
 We set TIM4 to reload the counter at 1/8 speed of TIM1. Which means the signal output is at 1/8 of screen pixel ,or 100 pixel width. 
 
-We use TIM4 time-up signal to control DMA1 channel7 speed to transfer data from memory to GPIO port (in this case, PB8-PB15). By using Circular mode we can register callback functions to move data from our videoRAM area to DMA memory to be ready to sent. 
-
-Please note that HAL_DMA_RegisterCallback() is rather finicky, using the function anywhere after the location I added in the code might cause it to fail. So we set it first thing before start the DMA for the first time.
-
+We use TIM4 time-up signal to control DMA1 channel7 speed to transfer data from memory to GPIO port (in this case, PB8-PB15). By using Circular mode we can register callback functions to move data from our videoRAM area to DMA memory area so while we are preparing half of DMA memory, DMA will be sending another half to GPIO at the same time. 
 
 ## Bonus: A little bit of Tetris
 
