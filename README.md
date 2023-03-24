@@ -71,7 +71,7 @@ TIM1 generates H-sync signal with Prescaler value is 1. So it halves the input c
 
 One scan line requires 1024 pixel clocks, so the Counter Period is 1023. 
 
-We use PWM channel 1 to generate H-sync signal, with pulse is 72 pixel clock wide.
+We use PWM channel 1 to generate H-sync signal, pulse width is 72 pixel clock wide.
 
 ![](Pictures/tim1.png)
 
