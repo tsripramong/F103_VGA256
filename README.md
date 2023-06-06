@@ -1,9 +1,9 @@
 # 8-bit color VGA display for STM32F103C8T6 (Blue Pill)
 
-A working example for 1-bit(monochrome) VGA display for Blue Pill board using (mainly)HAL API.
+A working example for 8-bit color VGA display for Blue Pill board using (mainly)HAL API.
 
 ### What is inside this example:
-- An example to use DMA-to-Peripheral for STM32 to push output patterns (8 bits at once). Here, we send the output via DAC using resistors as R/G/B signals for VGA display
+- An example to use DMA-to-Peripheral (GPIOs) for STM32 to push output patterns (8 bits at once). Here, we send the output via DAC using resistors as R/G/B signals for VGA display
 - An example to generate H-sync and V-sync for VGA display at 800x600@56Hz
 - A simple Tetris game to show an implementation of using GPIO input alongside the VGA display code.
 
